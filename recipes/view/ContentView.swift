@@ -14,15 +14,26 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
+            //List with all the categories
+            
+//            List {
+//                Text("asldfjsdak")
+//                Text("asldfjsdak")
+//                Text("asldfjsdak")
+//                Text("asldfjsdak")
+//            }
+        } content: {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+            //List with all the recipes from that category
+                
+//                ForEach(items) { item in
+//                    NavigationLink {
+//                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+//                    } label: {
+//                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+//                    }
+//                }
+//                .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
