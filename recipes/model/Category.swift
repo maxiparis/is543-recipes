@@ -10,7 +10,7 @@ import SwiftData
 import Foundation
 
 @Model
-class Category {
+class Category: Identifiable, Hashable {
     @Attribute(.unique) var id: UUID = UUID()
     var title: String
     @Relationship(deleteRule: .nullify, inverse: \Recipe.categories) var recipes: [Recipe] = []

@@ -16,8 +16,7 @@ class Ingredient {
     var scale: String
     var recipe: Recipe?
     
-    init(id: UUID = UUID(), name: String, amount: Double, scale: String, recipe: Recipe) {
-        self.id = id
+    init(name: String, amount: Double, scale: String, recipe: Recipe? = nil) {
         self.name = name
         self.amount = amount
         self.scale = scale

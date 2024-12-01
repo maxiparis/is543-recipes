@@ -17,11 +17,10 @@ class Recipe {
     var servings: Int //for people, eg: 2 servings are for 2 people
     var favorite: Bool
     var instructions: String
-    var categories: Category?
+    var categories: [Category]
     @Relationship(deleteRule: .cascade, inverse: \Ingredient.recipe) var ingredients: [Ingredient] = []
             
-    init(id: UUID, name: String, recipeDescription: String, cookTime: Int, servings: Int, favorite: Bool, instructions: String, categories: Category? = nil, ingredients: [Ingredient]) {
-        self.id = id
+    init(name: String, recipeDescription: String, cookTime: Int, servings: Int, favorite: Bool, instructions: String, categories: [Category], ingredients: [Ingredient]) {
         self.name = name
         self.recipeDescription = recipeDescription
         self.cookTime = cookTime
