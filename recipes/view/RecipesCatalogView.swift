@@ -8,8 +8,9 @@
 import SwiftUI
 import SwiftData
 
-struct RecipesCatalog: View {
+struct RecipesCatalogView: View {
     @Environment(RecipeViewModel.self) private var viewModel
+    
     @State private var selectedCategory: Category?
     @State private var selectedRecipe: Recipe? {
         didSet {
@@ -44,9 +45,13 @@ struct RecipesCatalog: View {
                 List(selectedCategory.recipes, id: \.self, selection: $selectedRecipe) { recipe in
                     Text(recipe.name)
                 }
+                .listStyle(.insetGrouped)
+                .navigationTitle("Recipes")
             } else {
                 Text("Select a category")
+                .navigationTitle("Recipes")
             }
+                
         } detail: {
             if let selectedRecipe {
                 withAnimation {
@@ -64,42 +69,34 @@ struct RecipeView: View {
     var recipe: Recipe
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 15) {
-                Text(recipe.name)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text(recipe.recipeDescription)
-                    .font(.title3)
+            List {
+                Section {
+                    Text(recipe.recipeDescription)
+                        .font(.title3)
+                }
                 
                 
-                Text("Ingredients")
-                    .font(.title)
                 
-                List {
-                    ForEach(recipe.ingredients) { ingredient in
-                        Text(ingredient.name)
+                Section {
+                    Text("Ingredients")
+                        .font(.title)
+                    if (recipe.ingredients.isEmpty) {
+                        Text("No Ingredients")
+                    } else {
+                        ForEach(recipe.ingredients) { ing in
+                            Text("\(ing.name) - \(ing.amount) \(ing.scale)")
+                        }
                     }
                 }
                 
-                if (recipe.ingredients.isEmpty) {
-                    Text("No Ingredients")
-                } else {
-                    ForEach(recipe.ingredients) { ing in
-                        Text("\(ing.name) - \(ing.amount) \(ing.scale)")
-                    }
+                Section {
+                    Text("Instructions")
+                        .font(.title)
+                    
+                    Text(recipe.instructions).font(.title3)
                     
                 }
-                
-                Text("Instructions")
-                    .font(.title)
-                
-                Text(recipe.instructions).font(.title3)
-                
-                Spacer()
             }
-        }
-        .padding()
+            .navigationTitle(recipe.name)
     }
 }

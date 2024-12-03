@@ -16,7 +16,7 @@ struct recipesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RecipesCatalog()
+            RecipesCatalogView()
         }
         .modelContainer(container)
         .environment(viewModel)

@@ -31,7 +31,11 @@ class RecipeViewModel {
     }
     
     
-    //MARK: - Functions
+    //MARK: - User Intents
+    
+
+    
+    //MARK: - Business Logic
 
     func fetchData() {
         print("FetchData")
