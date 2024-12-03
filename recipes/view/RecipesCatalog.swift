@@ -11,8 +11,14 @@ import SwiftData
 struct RecipesCatalog: View {
     @Environment(RecipeViewModel.self) private var viewModel
     @State private var selectedCategory: Category?
-    @State private var selectedRecipe: Recipe?
-
+    @State private var selectedRecipe: Recipe? {
+        didSet {
+            if let selectedRecipe {
+                print("selectedRecipe: \(selectedRecipe), ingredients: \(selectedRecipe.ingredients)")
+            }
+        }
+    }
+    
     var body: some View {
         NavigationSplitView {
             ZStack(alignment: .bottom) {
@@ -41,44 +47,59 @@ struct RecipesCatalog: View {
             } else {
                 Text("Select a category")
             }
-                
-//                .onDelete(perform: deleteItems)
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    EditButton()
-//                }
-//                ToolbarItem {
-//                    Button(action: addItem) {
-//                        Label("Add Item", systemImage: "plus")
-//                    }
-//                }
-//            }
         } detail: {
             if let selectedRecipe {
-                Text("You selected \(selectedRecipe.name)")
+                withAnimation {
+                    RecipeView(recipe: selectedRecipe)
+                }
             } else {
-                Text("Select an item")
+                Text("Select a recipe.")
             }
         }
     }
-//
-//    private func addItem() {
-//        withAnimation {
-//            let newItem = Item(timestamp: Date())
-//            modelContext.insert(newItem)
-//        }
-//    }
-//
-//    private func deleteItems(offsets: IndexSet) {
-//        withAnimation {
-//            for index in offsets {
-//                modelContext.delete(items[index])
-//            }
-//        }
-//    }
 }
 
-//#Preview {
-//    RecipesCatalog()
-//        .modelContainer(for: Item.self, inMemory: true)
-//}
+
+struct RecipeView: View {
+    var recipe: Recipe
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 15) {
+                Text(recipe.name)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Text(recipe.recipeDescription)
+                    .font(.title3)
+                
+                
+                Text("Ingredients")
+                    .font(.title)
+                
+                List {
+                    ForEach(recipe.ingredients) { ingredient in
+                        Text(ingredient.name)
+                    }
+                }
+                
+                if (recipe.ingredients.isEmpty) {
+                    Text("No Ingredients")
+                } else {
+                    ForEach(recipe.ingredients) { ing in
+                        Text("\(ing.name) - \(ing.amount) \(ing.scale)")
+                    }
+                    
+                }
+                
+                Text("Instructions")
+                    .font(.title)
+                
+                Text(recipe.instructions).font(.title3)
+                
+                Spacer()
+            }
+        }
+        .padding()
+    }
+}

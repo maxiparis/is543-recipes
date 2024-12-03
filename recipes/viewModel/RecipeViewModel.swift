@@ -42,6 +42,8 @@ class RecipeViewModel {
             
             let categoriesDescriptor = FetchDescriptor<Category>()
             categories = try modelContext.fetch(categoriesDescriptor)
+            
+            print("Recipe Ingredients: \(recipes.map { $0.ingredients.map { $0.name } })")
         } catch {
             print("Failed to fetch data.")
         }
@@ -51,17 +53,17 @@ class RecipeViewModel {
         print("createDefaultData")
         
         //Ingredients
-        let completoIngredient1 = Ingredient(name: "Hot Dogs Buns", amount: 2, scale: "units")
-        let completoIngredient2 = Ingredient(name: "Hot dogs", amount: 2, scale: "units")
-        let completoIngredient3 = Ingredient(name: "Diced Tomatoes", amount: 500, scale: "Gr")
-        let completoIngredient4 = Ingredient(name: "Avocado", amount: 2, scale: "units")
+        let completoIngredient1 = Ingredient(name: "Hot Dogs Buns", amount: "2", scale: "units")
+        let completoIngredient2 = Ingredient(name: "Hot dogs", amount: "2", scale: "units")
+        let completoIngredient3 = Ingredient(name: "Diced Tomatoes", amount: "500", scale: "Gr")
+        let completoIngredient4 = Ingredient(name: "Avocado", amount: "2", scale: "units")
+        
+        let completoIngredients = [completoIngredient1, completoIngredient2, completoIngredient3, completoIngredient4]
         
         //Recipes
         let completo = Recipe(name: "Completo",
                               recipeDescription: """
-                                A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, 
-                                chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different
-                                 than ours in the US, so we decided not to use that here.
+                                A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different than ours in the US, so we decided not to use that here.
                                 """,
                               cookTime: 30,
                               servings: 1,
@@ -80,15 +82,17 @@ class RecipeViewModel {
                                 Then top everything off with ketchup and mustard and you’re all done and ready to enjoy them!
 
                                 """,
-                              categories: [], ingredients: [completoIngredient1, completoIngredient2, completoIngredient3, completoIngredient4]
+                              categories: [], ingredients: completoIngredients
         )
+        
+        completoIngredients.forEach { $0.recipe = completo }
         
         
         //Categories
         let chilean = Category(title: "Chilean", recipes: [completo])
         
         
-        let pastaIngredient = Ingredient(name: "Pasta", amount: 2, scale: "Kg")
+        let pastaIngredient = Ingredient(name: "Pasta", amount: "2", scale: "Kg")
         let pasta = Recipe(
             name: "Lasagna",
             recipeDescription: "Description",
@@ -101,20 +105,25 @@ class RecipeViewModel {
         )
         let italian = Category(title: "Italian", recipes: [pasta])
         
+        modelContext.insert(completoIngredient1)
+        modelContext.insert(completoIngredient2)
+        modelContext.insert(completoIngredient3)
+        modelContext.insert(completoIngredient4)
+        modelContext.insert(pastaIngredient)
+    
+        
         modelContext.insert(completo)
         modelContext.insert(pasta)
         
         modelContext.insert(chilean)
         modelContext.insert(italian)
         
-        // Save changes
         try? modelContext.save()
     }
     
     func eraseAllData() {
         let fetchRequest = FetchDescriptor<Recipe>()
         if let recipes = try? modelContext.fetch(fetchRequest) {
-            // Loop through the fetched objects and delete them
             for recipe in recipes {
                 modelContext.delete(recipe)
             }
@@ -122,13 +131,18 @@ class RecipeViewModel {
         
         let fetchRequest2 = FetchDescriptor<Category>()
         if let categories = try? modelContext.fetch(fetchRequest2) {
-            // Loop through the fetched objects and delete them
             for category in categories {
                 modelContext.delete(category)
             }
-            
-            // Save changes to persist the deletions
         }
+        
+        let fetchRequest3 = FetchDescriptor<Ingredient>()
+        if let ingredients = try? modelContext.fetch(fetchRequest3) {
+            for ingredient in ingredients {
+                modelContext.delete(ingredient)
+            }
+        }
+        
         try? modelContext.save()
         
         fetchData()
