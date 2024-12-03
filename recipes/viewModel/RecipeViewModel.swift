@@ -57,10 +57,10 @@ class RecipeViewModel {
         print("createDefaultData")
         
         //Ingredients
-        let completoIngredient1 = Ingredient(name: "Hot Dogs Buns", amount: "2", scale: "units")
-        let completoIngredient2 = Ingredient(name: "Hot dogs", amount: "2", scale: "units")
-        let completoIngredient3 = Ingredient(name: "Diced Tomatoes", amount: "500", scale: "Gr")
-        let completoIngredient4 = Ingredient(name: "Avocado", amount: "2", scale: "units")
+        let completoIngredient1 = Ingredient(name: "🥖 Hot Buns", amount: "2", scale: "units")
+        let completoIngredient2 = Ingredient(name: "🌭 Hot dogs", amount: "2", scale: "units")
+        let completoIngredient3 = Ingredient(name: "🍅 Diced Tomatoes", amount: "500", scale: "Gr")
+        let completoIngredient4 = Ingredient(name: "🥑 Avocado", amount: "2", scale: "units")
         
         let completoIngredients = [completoIngredient1, completoIngredient2, completoIngredient3, completoIngredient4]
         
@@ -96,7 +96,7 @@ class RecipeViewModel {
         let chilean = Category(title: "Chilean", recipes: [completo])
         
         
-        let pastaIngredient = Ingredient(name: "Pasta", amount: "2", scale: "Kg")
+        let pastaIngredient = Ingredient(name: "🍝 Pasta", amount: "2", scale: "Kg")
         let pasta = Recipe(
             name: "Lasagna",
             recipeDescription: "Description",
