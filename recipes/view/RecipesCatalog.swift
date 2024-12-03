@@ -11,37 +11,38 @@ import SwiftData
 struct RecipesCatalog: View {
     @Environment(RecipeViewModel.self) private var viewModel
     @State private var selectedCategory: Category?
+    @State private var selectedRecipe: Recipe?
 
     var body: some View {
         NavigationSplitView {
-            VStack {
-                List(viewModel.categories, selection: $selectedCategory) { category in
+            ZStack(alignment: .bottom) {
+                List(viewModel.categories, id: \.self, selection: $selectedCategory) { category in
                     Text(category.title)
                 }
-                
-                Button("Reset Data") {
-                    viewModel.createDefaultData()
-                    viewModel.fetchData()
-                }
-                
-                Button("Erase all data") {
-                    viewModel.eraseAllData()
+                VStack {
+                    Button("Reset Data") {
+                        viewModel.eraseAllData()
+                        viewModel.createDefaultData()
+                        viewModel.fetchData()
+                    }
+                    
+                    Button("Erase all data") {
+                        viewModel.eraseAllData()
+                        viewModel.fetchData()
+                    }
                 }
             }
             .navigationTitle("Categories")
         } content: {
-            List {
-            //List with all the recipes from that category
-                
-//                ForEach(items) { item in
-//                    NavigationLink {
-//                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-//                    } label: {
-//                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-//                    }
-//                }
-//                .onDelete(perform: deleteItems)
+            if let selectedCategory {
+                List(selectedCategory.recipes, id: \.self, selection: $selectedRecipe) { recipe in
+                    Text(recipe.name)
+                }
+            } else {
+                Text("Select a category")
             }
+                
+//                .onDelete(perform: deleteItems)
 //            .toolbar {
 //                ToolbarItem(placement: .navigationBarTrailing) {
 //                    EditButton()
@@ -53,7 +54,11 @@ struct RecipesCatalog: View {
 //                }
 //            }
         } detail: {
-            Text("Select an item")
+            if let selectedRecipe {
+                Text("You selected \(selectedRecipe.name)")
+            } else {
+                Text("Select an item")
+            }
         }
     }
 //
