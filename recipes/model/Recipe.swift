@@ -18,6 +18,10 @@ class Recipe {
     var instructions: String
     var categories: [Category]
     @Relationship(deleteRule: .cascade, inverse: \Ingredient.recipe) var ingredients: [Ingredient] = []
+    
+    var isFavorite: Bool {
+        return categories.contains(where: { $0.title == "Favorites" })
+    }
             
     init(name: String, recipeDescription: String, cookTime: Int, servings: Int, instructions: String, categories: [Category], ingredients: [Ingredient]) {
         self.name = name

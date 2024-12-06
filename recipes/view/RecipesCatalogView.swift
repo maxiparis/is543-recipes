@@ -43,7 +43,7 @@ struct RecipesCatalogView: View {
         } detail: {
             if let selectedRecipe = viewModel.selectedRecipe {
                 withAnimation {
-                    RecipeDetailsView(recipe: selectedRecipe)
+                    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: selectedRecipe))
                 }
             } else {
                 Text("Select a recipe.")

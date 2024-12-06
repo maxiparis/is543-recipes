@@ -92,7 +92,6 @@ struct DefaultRecipesManager {
                 Ingredient(name: "Ground Beef", amount: "1", scale: "pound"),
                 Ingredient(name: "Empanada pastry rounds", amount: "24", scale: "units"),
                 Ingredient(name: "Egg", amount: "1", scale: "unit")
-                
             ],
             recipe: Recipe(
                 name: "Argentinian Beef Empanadas",
@@ -122,12 +121,12 @@ struct DefaultRecipesManager {
     
     mutating func generateInitialCategories() {
         self.categories = [
-            Category(title: CategoryNames.Favorites.rawValue),
-            Category(title: CategoryNames.Chilean.rawValue),
-            Category(title: CategoryNames.Argentinian.rawValue),
-            Category(title: CategoryNames.Paraguayan.rawValue),
-            Category(title: CategoryNames.Peruvian.rawValue),
-            Category(title: CategoryNames.American.rawValue)
+            Category(title: CategoryNames.Favorites.rawValue, emoji: "⭐️"),
+            Category(title: CategoryNames.Chilean.rawValue, emoji: "🇨🇱"),
+            Category(title: CategoryNames.Argentinian.rawValue, emoji: "🇦🇷"),
+            Category(title: CategoryNames.Paraguayan.rawValue, emoji: "🇵🇾"),
+            Category(title: CategoryNames.Peruvian.rawValue, emoji: "🇵🇪"),
+            Category(title: CategoryNames.American.rawValue, emoji: "🇺🇸")
         ]
     }
 
