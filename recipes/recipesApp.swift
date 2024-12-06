@@ -12,14 +12,14 @@ import SwiftData
 struct recipesApp: App {
     
     let container: ModelContainer
-    let viewModel: RecipeViewModel
+    var viewModel: RecipeCategoriesManager
 
     var body: some Scene {
         WindowGroup {
-            RecipesCatalogView()
+            RecipesCatalogView(viewModel: viewModel)
         }
         .modelContainer(container)
-        .environment(viewModel)
+//        .environment(viewModel)
     }
     
     init() {
@@ -31,7 +31,7 @@ struct recipesApp: App {
                 """)
         }
         
-        viewModel = RecipeViewModel(modelContext: container.mainContext)
+        viewModel = RecipeCategoriesManager(modelContext: container.mainContext)
     }
     
 }

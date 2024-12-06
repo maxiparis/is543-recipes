@@ -17,6 +17,15 @@ class RecipeCategoriesManager {
     var recipes: [Recipe] = []
     var categories: [Category] = []
     
+    var selectedCategory: Category?
+    var selectedRecipe: Recipe? {
+        didSet {
+            if let selectedRecipe {
+                print("selectedRecipe: \(selectedRecipe), ingredients: \(selectedRecipe.ingredients)")
+            }
+        }
+    }
+    
     
     //MARK: - Init
 
@@ -24,7 +33,8 @@ class RecipeCategoriesManager {
         self.modelContext = modelContext
         fetchData()
         
-        if recipes.isEmpty || categories.isEmpty {
+        //
+        if recipes.isEmpty && categories.isEmpty {
             createDefaultData()
             fetchData()
         }
@@ -32,10 +42,19 @@ class RecipeCategoriesManager {
     
     
     //MARK: - User Intents
+    func resetData() {
+        eraseAllData()
+        createDefaultData()
+        fetchData()
+    }
     
+    func handleEraseAllData() {
+        eraseAllData()
+        fetchData()
+    }
 
     
-    //MARK: - Business Logic
+    //MARK: - Data Access
 
     func fetchData() {
         print("FetchData")
@@ -46,8 +65,6 @@ class RecipeCategoriesManager {
             
             let categoriesDescriptor = FetchDescriptor<Category>()
             categories = try modelContext.fetch(categoriesDescriptor)
-            
-            print("Recipe Ingredients: \(recipes.map { $0.ingredients.map { $0.name } })")
         } catch {
             print("Failed to fetch data.")
         }

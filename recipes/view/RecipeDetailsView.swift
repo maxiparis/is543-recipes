@@ -4,7 +4,7 @@
 //
 //  Created by Maximiliano París Gaete on 12/5/24.
 //
-
+import SwiftUI
 
 struct RecipeDetailsView: View {
     var recipe: Recipe
