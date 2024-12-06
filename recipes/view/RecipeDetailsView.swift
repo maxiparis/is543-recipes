@@ -12,6 +12,16 @@ struct RecipeDetailsView: View {
     
     var body: some View {
             List {
+                AsyncImage(url: URL(string: recipeManager.imageURL)) { image in
+                            image
+                                .resizable()
+                                .cornerRadius(20)
+                                .scaledToFit()
+                        } placeholder: {
+                            ProgressView() // Shows a loading spinner while the image loads
+                        }
+//                        .frame(width: 200, height: 200)
+                
                 Section(header: Text("Description").font(.title3)){
                     Text(recipeManager.recipe.recipeDescription)
                         .font(.title3)
@@ -73,6 +83,7 @@ struct RecipeDetailsView: View {
     
     RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: Recipe(
         name: "Completo",
+        imageURL: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Completo_italiano.jpg",
         recipeDescription: """
            A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different than ours in the US, so we decided not to use that here.
            """,

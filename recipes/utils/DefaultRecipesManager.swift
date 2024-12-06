@@ -40,6 +40,7 @@ struct DefaultRecipesManager {
                           Ingredient(name: "🥑 Avocado", amount: "2", scale: "units")],
             recipe: Recipe(
                 name: "Completo",
+                imageURL: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Completo_italiano.jpg",
                 recipeDescription: """
                    A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different than ours in the US, so we decided not to use that here.
                    """,
@@ -74,6 +75,7 @@ struct DefaultRecipesManager {
             ],
             recipe: Recipe(
                 name: "Pan con Palta",
+                imageURL: "https://cloudfront-us-east-1.images.arcpublishing.com/copesa/XTTMO6KU3FBHJOXSFBBT2E7JGE.jpg",
                 recipeDescription: "A chilean classic",
                 cookTime: 10,
                 servings: 1,
@@ -95,6 +97,7 @@ struct DefaultRecipesManager {
             ],
             recipe: Recipe(
                 name: "Argentinian Beef Empanadas",
+                imageURL: "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2024-02-empanadas%2Fempanadas-515_1",
                 recipeDescription: "This authentic empanada recipe is for Argentinian beef empanadas filled with a savory and delicious mixture of ground beef, hard-cooked eggs, green olives, and potatoes. These classic empanadas are ubiquitous all over Argentina.",
                 cookTime: 90,
                 servings: 12,

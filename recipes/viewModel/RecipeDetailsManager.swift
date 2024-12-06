@@ -15,6 +15,10 @@ class RecipeDetailsManager {
         recipe.isFavorite
     }
     
+    var imageURL: String {
+        recipe.imageURL
+    }
+    
     init(recipe: Recipe) {
         self.recipe = recipe
     }

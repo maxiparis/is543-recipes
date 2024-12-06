@@ -13,6 +13,7 @@ class Recipe {
     @Attribute(.unique) var id: UUID = UUID()
     var name: String
     var recipeDescription: String
+    var imageURL: String
     var cookTime: Int //in minutes
     var servings: Int //for people, eg: 2 servings are for 2 people
     var instructions: String
@@ -23,8 +24,9 @@ class Recipe {
         return categories.contains(where: { $0.title == "Favorites" })
     }
             
-    init(name: String, recipeDescription: String, cookTime: Int, servings: Int, instructions: String, categories: [Category], ingredients: [Ingredient]) {
+    init(name: String, imageURL: String, recipeDescription: String, cookTime: Int, servings: Int, instructions: String, categories: [Category], ingredients: [Ingredient]) {
         self.name = name
+        self.imageURL = imageURL
         self.recipeDescription = recipeDescription
         self.cookTime = cookTime
         self.servings = servings
