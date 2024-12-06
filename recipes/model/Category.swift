@@ -15,8 +15,9 @@ class Category: Identifiable, Hashable {
     var title: String
     @Relationship(deleteRule: .nullify, inverse: \Recipe.categories) var recipes: [Recipe] = []
     
-    init(title: String, recipes: [Recipe]) {
+    init(title: String, recipes: [Recipe] = []) {
         self.title = title
         self.recipes = recipes
     }
+    
 }
