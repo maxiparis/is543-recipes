@@ -18,9 +18,10 @@ struct RecipeDetailsView: View {
                                 .cornerRadius(20)
                                 .scaledToFit()
                         } placeholder: {
-                            ProgressView() // Shows a loading spinner while the image loads
-                        }
-//                        .frame(width: 200, height: 200)
+                            ProgressView()
+                }
+                .listRowBackground(Color.clear)
+                
                 
                 Section(header: Text("Description").font(.title3)){
                     Text(recipeManager.recipe.recipeDescription)
