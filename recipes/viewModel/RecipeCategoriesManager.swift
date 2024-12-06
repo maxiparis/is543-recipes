@@ -8,7 +8,7 @@ import SwiftUI
 import SwiftData
 
 @Observable
-class RecipeViewModel {
+class RecipeCategoriesManager {
     
     //MARK: - Class properties
 
