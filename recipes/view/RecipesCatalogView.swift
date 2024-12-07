@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 
 struct RecipesCatalogView: View {
-//    @Environment(RecipeCategoriesManager.self) private var viewModel
     @Bindable var viewModel: RecipeCategoriesManager
     
     var body: some View {
@@ -43,7 +42,7 @@ struct RecipesCatalogView: View {
         } detail: {
             if let selectedRecipe = viewModel.selectedRecipe {
                 withAnimation {
-                    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: selectedRecipe))
+                    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: selectedRecipe, dataHandler: viewModel.dataHandler))
                 }
             } else {
                 Text("Select a recipe.")

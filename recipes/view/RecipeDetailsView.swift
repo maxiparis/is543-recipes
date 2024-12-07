@@ -18,7 +18,11 @@ struct RecipeDetailsView: View {
                                 .cornerRadius(20)
                                 .scaledToFit()
                         } placeholder: {
-                            ProgressView()
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
                 }
                 .listRowBackground(Color.clear)
                 
@@ -68,45 +72,48 @@ struct RecipeDetailsView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: recipeManager.isRecipeFavorite ? "star.fill" : "star")
                         .foregroundStyle(.yellow)
+                        .onTapGesture {
+                            recipeManager.toggleRecipeIsFavorite()
+                        }
                 }
             }
     }
 }
 
-#Preview {
-    var ingredients = [Ingredient(name: "🥖 Hot Buns", amount: "2", scale: "units"),
-                      Ingredient(name: "🌭 Hot dogs", amount: "2", scale: "units"),
-                      Ingredient(name: "🍅 Diced Tomatoes", amount: "500", scale: "Gr"),
-                      Ingredient(name: "🥑 Avocado", amount: "2", scale: "units")
-    ]
-    
-    var categories = [Category(title: "Favorites", emoji: "⭐️"), Category(title: "Chilean", emoji: "🇨🇱")]
-    
-    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: Recipe(
-        name: "Completo",
-        imageURL: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Completo_italiano.jpg",
-        recipeDescription: """
-           A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different than ours in the US, so we decided not to use that here.
-           """,
-        cookTime: 30,
-        servings: 1,
-        instructions: """
-           Cook – The first thing you’ll want to do is boil or grill your hot dogs.
-           
-           Slice & Dice – While the hot dogs are cooking, you want to chop your onions and tomatoes, as well as mash-up your avocado.
-           
-           Layer –  When you’re building your completo it’s all about layering in the proper order.
-           
-           First, you’ll put the diced tomatoes and onions on first
-           
-           Next, spread the avocado over the top. This will “seal” them against the hot dog so they’ll stay put while you’re eating it.
-           
-           Then top everything off with ketchup and mustard and you’re all done and ready to enjoy them!
-           
-           """,
-        categories: categories,
-        ingredients: ingredients
-      ))
-    )
-}
-
+//#Preview {
+//    var ingredients = [Ingredient(name: "🥖 Hot Buns", amount: "2", scale: "units"),
+//                      Ingredient(name: "🌭 Hot dogs", amount: "2", scale: "units"),
+//                      Ingredient(name: "🍅 Diced Tomatoes", amount: "500", scale: "Gr"),
+//                      Ingredient(name: "🥑 Avocado", amount: "2", scale: "units")
+//    ]
+//    
+//    var categories = [Category(title: "Favorites", emoji: "⭐️"), Category(title: "Chilean", emoji: "🇨🇱")]
+//    
+//    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: Recipe(
+//        name: "Completo",
+//        imageURL: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Completo_italiano.jpg",
+//        recipeDescription: """
+//           A completo is a Chilean-style hot dog (yes, there is a hot dog under there) in a fresh, soft bun that’s topped with diced onions, chopped tomatoes, ketchup, mustard, and mashed avocado. In Chile, they add lots of mayo to the mix but their mayonnaise is different than ours in the US, so we decided not to use that here.
+//           """,
+//        cookTime: 30,
+//        servings: 1,
+//        instructions: """
+//           Cook – The first thing you’ll want to do is boil or grill your hot dogs.
+//           
+//           Slice & Dice – While the hot dogs are cooking, you want to chop your onions and tomatoes, as well as mash-up your avocado.
+//           
+//           Layer –  When you’re building your completo it’s all about layering in the proper order.
+//           
+//           First, you’ll put the diced tomatoes and onions on first
+//           
+//           Next, spread the avocado over the top. This will “seal” them against the hot dog so they’ll stay put while you’re eating it.
+//           
+//           Then top everything off with ketchup and mustard and you’re all done and ready to enjoy them!
+//           
+//           """,
+//        categories: categories,
+//        ingredients: ingredients
+//    ), dataHandler: )
+//    )
+//}
+//
