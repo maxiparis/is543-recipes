@@ -14,9 +14,22 @@ struct RecipesCatalogView: View {
     var body: some View {
         NavigationSplitView {
             ZStack(alignment: .bottom) {
-                List(viewModel.categories, id: \.self, selection: $viewModel.selectedCategory) { category in
-                    Text(category.title)
+                List(selection: $viewModel.selectedCategory) {
+                    Section {
+                        ForEach(viewModel.allAndFavoritesCategories.sorted(by: { $0.title < $1.title })) { category in
+                            Text(category.title)
+                                .tag(category)
+                        }
+                    }
+                    
+                    Section {
+                        ForEach(viewModel.otherCategories) { category in
+                            Text(category.title)
+                                .tag(category)
+                        }
+                    }
                 }
+                
                 VStack {
                     Button("Reset Data") {
                         viewModel.resetData()
