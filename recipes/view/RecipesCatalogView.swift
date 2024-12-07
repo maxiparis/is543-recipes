@@ -30,11 +30,17 @@ struct RecipesCatalogView: View {
             .navigationTitle("Categories")
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
-                List(selectedCategory.recipes, id: \.self, selection: $viewModel.selectedRecipe) { recipe in
-                    Text(recipe.name)
+                if selectedCategory.recipes.isEmpty {
+                    Text("There are no recipes in this category")
+                        .listStyle(.insetGrouped)
+                        .navigationTitle("Recipes")
+                } else {
+                    List(selectedCategory.recipes, id: \.self, selection: $viewModel.selectedRecipe) { recipe in
+                        Text(recipe.name)
+                    }
+                    .listStyle(.insetGrouped)
+                    .navigationTitle("Recipes")
                 }
-                .listStyle(.insetGrouped)
-                .navigationTitle("Recipes")
             } else {
                 Text("Select a category")
                 .navigationTitle("Recipes")

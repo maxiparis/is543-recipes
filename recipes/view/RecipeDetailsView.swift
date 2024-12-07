@@ -71,6 +71,7 @@ struct RecipeDetailsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: recipeManager.isRecipeFavorite ? "star.fill" : "star")
+                        .contentTransition(.symbolEffect(.replace))
                         .foregroundStyle(.yellow)
                         .onTapGesture {
                             recipeManager.toggleRecipeIsFavorite()
