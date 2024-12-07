@@ -90,10 +90,10 @@ class DataHandler {
 
         if recipe.isFavorite {
             recipe.categories.removeAll(where: { $0.title == CategoryNames.Favorites.rawValue } )
-            favorites.recipes.removeAll(where: { $0 == recipe })
+//            favorites.recipes.removeAll(where: { $0 == recipe })
         } else {
             recipe.categories.append(favorites)
-            favorites.recipes.append(recipe)
+//            favorites.recipes.append(recipe)
         }
         
         try? modelContext.save()

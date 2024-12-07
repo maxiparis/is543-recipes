@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 enum CategoryNames: String {
-    case Favorites, Argentinian, Chilean, Paraguayan, Peruvian, American
+    case All, Favorites, Argentinian, Chilean, Paraguayan, Peruvian, American
 }
 
 /// This struct's responsability is to create, and save to the `ModelContext` the initial list of `recipes` ,`categories` and `ingredients`.
@@ -124,6 +124,7 @@ struct DefaultRecipesManager {
     
     mutating func generateInitialCategories() {
         self.categories = [
+            Category(title: CategoryNames.All.rawValue, emoji: "🍽️"),
             Category(title: CategoryNames.Favorites.rawValue, emoji: "⭐️"),
             Category(title: CategoryNames.Chilean.rawValue, emoji: "🇨🇱"),
             Category(title: CategoryNames.Argentinian.rawValue, emoji: "🇦🇷"),
@@ -137,26 +138,34 @@ struct DefaultRecipesManager {
     //MARK: - Helper Functions
     
     func recipeGenerator(ingredients: [Ingredient], recipe: Recipe, categories: [Category]) {
+        let allCategory = self.categories.first(where: { $0.title == CategoryNames.All.rawValue })
+        
+        recipe.ingredients = ingredients
+        recipe.categories = categories
+        recipe.categories.append(allCategory!)
+        modelContext.insert(recipe)
+
+        
         //each ingredient's recipe will be the recipe
-        for ingredient in ingredients {
-            print("\(ingredient.name)\'s recipe is \(recipe.name) ")
-            ingredient.recipe = recipe
-            modelContext.insert(ingredient)
-        }
+//        for ingredient in ingredients {
+//            print("\(ingredient.name)\'s recipe is \(recipe.name) ")
+//            ingredient.recipe = recipe
+//            modelContext.insert(ingredient)
+//        }
         
         //recipe's ingredients will be the ingredients
-        recipe.ingredients = ingredients
-        print("\(recipe.name)'s ingredients are: \(recipe.ingredients)")
-        modelContext.insert(recipe)
+//        recipe.ingredients = ingredients
+//        print("\(recipe.name)'s ingredients are: \(recipe.ingredients)")
+//        modelContext.insert(recipe)
         
         //recipe's categories will be the categories
-        recipe.categories = categories
+//        recipe.categories = categories
         
         //categories' recipes will be added to the recipe
-        for category in categories {
-            category.recipes.append(recipe)
-            modelContext.insert(category)
-        }
+//        for category in categories {
+//            category.recipes.append(recipe)
+//            modelContext.insert(category)
+//        }
     }
     
     func getCategories(titles: [CategoryNames]) -> [Category] {
