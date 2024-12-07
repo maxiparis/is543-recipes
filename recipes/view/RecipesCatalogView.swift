@@ -17,14 +17,14 @@ struct RecipesCatalogView: View {
                 List(selection: $viewModel.selectedCategory) {
                     Section {
                         ForEach(viewModel.allAndFavoritesCategories.sorted(by: { $0.title < $1.title })) { category in
-                            Text(category.title)
+                            Text("\(category.emoji)  \(category.title)")
                                 .tag(category)
                         }
                     }
                     
                     Section {
                         ForEach(viewModel.otherCategories) { category in
-                            Text(category.title)
+                            Text("\(category.emoji)  \(category.title)")
                                 .tag(category)
                         }
                     }
@@ -46,13 +46,13 @@ struct RecipesCatalogView: View {
                 if selectedCategory.recipes.isEmpty {
                     Text("There are no recipes in this category")
                         .listStyle(.insetGrouped)
-                        .navigationTitle("Recipes")
+                        .navigationTitle(selectedCategory.title)
                 } else {
                     List(selectedCategory.recipes, id: \.self, selection: $viewModel.selectedRecipe) { recipe in
                         Text(recipe.name)
                     }
                     .listStyle(.insetGrouped)
-                    .navigationTitle("Recipes")
+                    .navigationTitle(selectedCategory.title)
                 }
             } else {
                 Text("Select a category")

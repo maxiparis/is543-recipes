@@ -119,6 +119,48 @@ struct DefaultRecipesManager {
             ),
             categories: getCategories(titles: [.Favorites, .Argentinian]))
         
+        //Chipa soo
+        recipeGenerator(
+            ingredients: [
+                Ingredient(name: "Harina Paraguaya", amount: "500", scale: "grs"),
+                Ingredient(name: "Yuca starch", amount: "2", scale: "tbsps"),
+                Ingredient(name: "Queso blanco", amount: "200", scale: "grs"),
+                Ingredient(name: "Hard boiled Eggs", amount: "4", scale: "units"),
+                Ingredient(name: "Boneless Beef Chuck", amount: "1", scale: "kg")
+            ],
+            recipe: Recipe(
+                name: "Chipa Soo",
+                imageURL: "https://assets.elgourmet.com/wp-content/uploads/2023/09/UO_EPISODICAS_CHIPA_SOO-3.jpg",
+                recipeDescription: "Chipa So'o is a traditional and iconic dish in Paraguayan cuisine. This savory snack, rooted in Guarani-Spanish Jesuit culinary heritage, consists of a delicious baked corn dough filled with savory meat. It's a popular choice for a mid-morning snack or lunch.",
+                cookTime: 90,
+                servings: 24,
+                instructions: """
+                    Prepare the Beef Filling
+                    In a large nonstick pot, combine beef, 2 tablespoons olive oil, water, beef bouillon, ground black pepper, red pepper flakes, and garlic. Stir and bring to a simmer over medium-high heat.
+                    Reduce heat to low, cover, and simmer, occasionally stirring, until the beef is tender, about 1 hour. Remove the lid and increase heat to high until the liquid reduces to a juicy but dry consistency, about 3 to 5 minutes.
+                    Add the paprika, white part of the scallions, onions, and peppers. Cook until soft, about 10 minutes.
+                    Add the parsley and the green part of the green onions. Sauté for another 10 minutes to eliminate any excess liquid (the mixture should be moist but not runny). Taste and adjust seasoning if needed.
+                    Working in batches, transfer the meat mixture to a food processor or blender and pulse until it is coarsely shredded (do not overdo it, or you'll end up with a puree).
+                    Transfer each batch of shredded meat mixture into a large mixing bowl and mix in the minced eggs. Let it cool to room temperature, then cover and refrigerate until ready to use.
+                    
+                    Prepare the Dough
+                    Whisk the cornmeal, yuca starch, and 3 teaspoons of kosher salt in a large bowl.
+                    Make a well in the center of the cornmeal mixture and add the butter, milk, cheese, and egg.
+                    Work the wet mixture into the cornmeal mixture to form a soft and smooth dough. If more liquid is needed, add a little more milk. Cover and refrigerate until ready to use.
+                    
+                    Assemble the Chipa So'o
+                    Preheat the oven to 350°F.
+                    Grab a handful of dough and roll it into a large ball. Flatten it with your hand, creating a hollow in the center with one of your thumbs to create a basket-like shape.
+                    Place a heaping spoonful of the filling in the center of the dough, then slowly close it to form a ball with the filling inside. Flatten the base on one side and give it a rounded or domed shape.
+                    Place the finished piece on a non-stick oven sheet or lightly greased and lightly dusted with cornmeal. Repeat the process until all the pieces are finished. If necessary, cook the Chipa So'o in two batches.
+                    Bake the Chipa So'o for 20 to 25 minutes or until golden brown.
+                    """,
+                categories: [],
+                ingredients: []
+            ),
+            categories: getCategories(titles: [.Paraguayan, .Favorites])
+        )
+        
         try? modelContext.save()
     }
     

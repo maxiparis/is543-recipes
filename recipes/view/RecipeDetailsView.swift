@@ -13,16 +13,16 @@ struct RecipeDetailsView: View {
     var body: some View {
             List {
                 AsyncImage(url: URL(string: recipeManager.imageURL)) { image in
-                            image
-                                .resizable()
-                                .cornerRadius(20)
-                                .scaledToFit()
-                        } placeholder: {
-                            HStack {
-                                Spacer()
-                                ProgressView()
-                                Spacer()
-                            }
+                    image
+                        .resizable()
+                        .cornerRadius(20)
+                        .scaledToFit()
+                } placeholder: {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
                 }
                 .listRowBackground(Color.clear)
                 
@@ -62,7 +62,7 @@ struct RecipeDetailsView: View {
                 }
                 
                 Section(header: Text("Categories").font(.title3)) {
-                    ForEach(recipeManager.recipe.categories, id: \.self) { category in
+                    ForEach(recipeManager.recipe.categories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue }), id: \.self) { category in
                         Text("\(category.emoji) \(category.title)")
                     }
                 }
