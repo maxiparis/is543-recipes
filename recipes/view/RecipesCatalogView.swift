@@ -44,9 +44,12 @@ struct RecipesCatalogView: View {
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
                 if selectedCategory.recipes.isEmpty {
-                    Text("There are no recipes in this category")
-                        .listStyle(.insetGrouped)
-                        .navigationTitle(selectedCategory.title)
+                    List {
+                        Text("There are no recipes in this category")
+                            .listRowBackground(Color.clear)
+                    }
+                    .listStyle(.insetGrouped)
+                    .navigationTitle(selectedCategory.title)
                 } else {
                     List(selection: $viewModel.selectedRecipe) {
                         if selectedCategory.title != CategoryNames.All.rawValue {
