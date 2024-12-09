@@ -19,6 +19,15 @@ class DataHandler {
     var recipes: [Recipe] = []
     var categories: [Category] = []
     
+    var allAndFavoritesCategories: [Category] {
+        categories.filter { $0.title == CategoryNames.All.rawValue || $0.title == CategoryNames.Favorites.rawValue }
+    }
+    
+    var otherCategories: [Category] {
+        let favoritesAndAllTitles = Set([CategoryNames.All.rawValue, CategoryNames.Favorites.rawValue])
+        return categories.filter { !favoritesAndAllTitles.contains($0.title) }
+    }
+    
     //MARK: - Init
 
     init(modelContext: ModelContext) {
@@ -115,8 +124,17 @@ class DataHandler {
         try? modelContext.save()
     }
     
+    //MARK: - User Intents
+    
     func removeRecipeFromCategory(_ recipe: Recipe, from category: Category) {
         category.recipes.removeAll(where: { $0 == recipe })
+        recipe.categories.removeAll(where: { $0 == category })
+        try? modelContext.save()
+    }
+    
+    func addRecipeToCategory(_ recipe: Recipe, to category: Category) {
+        recipe.categories.append(category)
+        category.recipes.append(recipe)
         try? modelContext.save()
     }
 }

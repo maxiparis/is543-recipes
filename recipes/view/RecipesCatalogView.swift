@@ -44,6 +44,7 @@ struct RecipesCatalogView: View {
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
                 if selectedCategory.recipes.isEmpty {
+//                    var _ = print("CATEGORY LIST RERENDERED")
                     List {
                         Text("There are no recipes in this category")
                             .listRowBackground(Color.clear)
@@ -52,6 +53,7 @@ struct RecipesCatalogView: View {
                     .navigationTitle(selectedCategory.title)
                 } else {
                     List(selection: $viewModel.selectedRecipe) {
+//                        var _ = print("CATEGORY LIST RERENDERED")
                         if selectedCategory.title != CategoryNames.All.rawValue {
                             ForEach(viewModel.filteredOrderedRecipes, id: \.self) { recipe in
                                 Text(recipe.name)

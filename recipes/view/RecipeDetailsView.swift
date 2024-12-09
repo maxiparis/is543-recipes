@@ -8,85 +8,128 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     //TODO: this should have a ViewModel
-    var recipeManager: RecipeDetailsManager
+    @Bindable var recipeManager: RecipeDetailsManager
     
     var body: some View {
-            List {
-                AsyncImage(url: URL(string: recipeManager.imageURL)) { image in
-                    image
-                        .resizable()
-                        .cornerRadius(20)
-                        .scaledToFit()
-                } placeholder: {
-                    HStack {
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+//        var _ = print("RE-RENDERED")
+        List {
+            AsyncImage(url: URL(string: recipeManager.imageURL)) { image in
+                image
+                    .resizable()
+                    .cornerRadius(20)
+                    .scaledToFit()
+            } placeholder: {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
                 }
-                .listRowBackground(Color.clear)
-                
-                
-                Section(header: Text("Description").font(.title3)){
-                    Text(recipeManager.recipe.recipeDescription)
-                        .font(.title3)
-                }
-                
-                Section(header: Text("Details").font(.title3)) {
-                    HStack {
-                        Label("Servings", systemImage: "person")
-                        Spacer()
-                        Text("\(recipeManager.recipe.servings)")
-                    }
-                    
-                    HStack {
-                        Label("Cook Time", systemImage: "clock")
-                        Spacer()
-                        Text("\(recipeManager.recipe.cookTime) minutes")
-                    }
+            }
+            .listRowBackground(Color.clear)
+            
+            
+            Section(header: Text("Description").font(.title3)){
+                Text(recipeManager.recipe.recipeDescription)
+                    .font(.title3)
+            }
+            
+            Section(header: Text("Details").font(.title3)) {
+                HStack {
+                    Label("Servings", systemImage: "person")
+                    Spacer()
+                    Text("\(recipeManager.recipe.servings)")
                 }
                 
-                Section(header: Text("Ingredients").font(.title3)) {
-                    
-                    if (recipeManager.recipe.ingredients.isEmpty) {
-                        Text("No Ingredients")
-                    } else {
-                        ForEach(recipeManager.recipe.ingredients) { ing in
-                            Text("\(ing.name) - \(ing.amount) \(ing.scale)")
-                        }
-                    }
+                HStack {
+                    Label("Cook Time", systemImage: "clock")
+                    Spacer()
+                    Text("\(recipeManager.recipe.cookTime) minutes")
                 }
+            }
+            
+            Section(header: Text("Ingredients").font(.title3)) {
                 
-                Section(header: Text("Instructions").font(.title3)) {
-                    ForEach(recipeManager.instructions.sorted(by: { $0.order < $1.order }), id: \.self) { instruction in
-                        VStack(alignment: .leading, spacing: 15) {
-                            Label(instruction.title, systemImage: "list.clipboard")
-                            Text(instruction.descriptions)
-                        }
-                    }
-                }
-                
-                Section(header: Text("Categories").font(.title3)) {
-                    ForEach(recipeManager.recipe.categories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue }), id: \.self) { category in
-                        Text("\(category.emoji) \(category.title)")
+                if (recipeManager.recipe.ingredients.isEmpty) {
+                    Text("No Ingredients")
+                } else {
+                    ForEach(recipeManager.recipe.ingredients) { ing in
+                        Text("\(ing.name) - \(ing.amount) \(ing.scale)")
                     }
                 }
             }
-            .navigationTitle(recipeManager.recipe.name)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: recipeManager.isRecipeFavorite ? "star.fill" : "star")
-                        .contentTransition(.symbolEffect(.replace))
-                        .foregroundStyle(.yellow)
-                        .onTapGesture {
-                            withAnimation {
-                                recipeManager.toggleRecipeIsFavorite()
-                            }
-                        }
+            
+            Section(header: Text("Instructions").font(.title3)) {
+                ForEach(recipeManager.instructions.sorted(by: { $0.order < $1.order }), id: \.self) { instruction in
+                    VStack(alignment: .leading, spacing: 15) {
+                        Label(instruction.title, systemImage: "list.clipboard")
+                        Text(instruction.descriptions)
+                    }
                 }
             }
+            
+            Section(header: Text("Categories").font(.title3)) {
+                ForEach(recipeManager.recipe.categories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue }), id: \.self) { category in
+                    Text("\(category.emoji) \(category.title)")
+                }
+                
+                Button {
+                    //show sheet
+                    recipeManager.presentAddCategory = true
+                } label: {
+                    Label("Add recipe to a category", systemImage: "plus")
+                }
+            }
+        }
+        .navigationTitle(recipeManager.recipe.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Image(systemName: recipeManager.isRecipeFavorite ? "star.fill" : "star")
+                    .contentTransition(.symbolEffect(.replace))
+                    .foregroundStyle(.yellow)
+                    .onTapGesture {
+                        withAnimation {
+                            recipeManager.toggleRecipeIsFavorite()
+                        }
+                    }
+            }
+        }
+        .onAppear {
+            print("Recipe Details View just appeared")
+        }
+        .sheet(isPresented: $recipeManager.presentAddCategory) {
+            AddCategoryToRecipeView(recipeManager: recipeManager)
+        }
     }
 }
+
+struct AddCategoryToRecipeView: View {
+    @Bindable var recipeManager: RecipeDetailsManager
+    
+    var body: some View {
+        List(recipeManager.allOtherCategories) { category in
+            Button {
+                //TODO:
+                if recipeManager.isRecipeInCategory(category) {
+                    withAnimation {
+                        recipeManager.handleRemoveRecipeFromCategory(category)
+                    }
+                } else {
+                    withAnimation {
+                        recipeManager.handleAddRecipeToCategory(category)
+                    }
+                }
+            } label: {
+                if recipeManager.isRecipeInCategory(category) {
+                    Label("Remove from \(category.title)", systemImage: "minus")
+                } else {
+                    Label("Add to \(category.title)", systemImage: "plus")
+                }
+            }
+        }
+        .navigationTitle("Add this recipe to:")
+    }
+}
+
 
 //#Preview {
 //    var ingredients = [Ingredient(name: "🥖 Hot Buns", amount: "2", scale: "units"),
@@ -94,9 +137,9 @@ struct RecipeDetailsView: View {
 //                      Ingredient(name: "🍅 Diced Tomatoes", amount: "500", scale: "Gr"),
 //                      Ingredient(name: "🥑 Avocado", amount: "2", scale: "units")
 //    ]
-//    
+//
 //    var categories = [Category(title: "Favorites", emoji: "⭐️"), Category(title: "Chilean", emoji: "🇨🇱")]
-//    
+//
 //    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: Recipe(
 //        name: "Completo",
 //        imageURL: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Completo_italiano.jpg",
@@ -107,17 +150,17 @@ struct RecipeDetailsView: View {
 //        servings: 1,
 //        instructions: """
 //           Cook – The first thing you’ll want to do is boil or grill your hot dogs.
-//           
+//
 //           Slice & Dice – While the hot dogs are cooking, you want to chop your onions and tomatoes, as well as mash-up your avocado.
-//           
+//
 //           Layer –  When you’re building your completo it’s all about layering in the proper order.
-//           
+//
 //           First, you’ll put the diced tomatoes and onions on first
-//           
+//
 //           Next, spread the avocado over the top. This will “seal” them against the hot dog so they’ll stay put while you’re eating it.
-//           
+//
 //           Then top everything off with ketchup and mustard and you’re all done and ready to enjoy them!
-//           
+//
 //           """,
 //        categories: categories,
 //        ingredients: ingredients

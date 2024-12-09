@@ -17,12 +17,11 @@ class RecipeCategoriesManager {
     }
     
     var allAndFavoritesCategories: [Category] {
-        categories.filter { $0.title == CategoryNames.All.rawValue || $0.title == CategoryNames.Favorites.rawValue }
+        dataHandler.allAndFavoritesCategories
     }
 
     var otherCategories: [Category] {
-        let favoritesAndAllTitles = Set([CategoryNames.All.rawValue, CategoryNames.Favorites.rawValue])
-        return categories.filter { !favoritesAndAllTitles.contains($0.title) }
+        dataHandler.otherCategories
     }
     
     var selectedCategory: Category?
