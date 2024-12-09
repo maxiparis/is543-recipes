@@ -114,4 +114,9 @@ class DataHandler {
         
         try? modelContext.save()
     }
+    
+    func removeRecipeFromCategory(_ recipe: Recipe, from category: Category) {
+        category.recipes.removeAll(where: { $0 == recipe })
+        try? modelContext.save()
+    }
 }

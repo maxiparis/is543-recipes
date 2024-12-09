@@ -48,12 +48,28 @@ struct RecipesCatalogView: View {
                         .listStyle(.insetGrouped)
                         .navigationTitle(selectedCategory.title)
                 } else {
-                    List(viewModel.filteredOrderedRecipes, id: \.self, selection: $viewModel.selectedRecipe) { recipe in
-                        Text(recipe.name)
+                    List(selection: $viewModel.selectedRecipe) {
+                        if selectedCategory.title != CategoryNames.All.rawValue {
+                            ForEach(viewModel.filteredOrderedRecipes, id: \.self) { recipe in
+                                Text(recipe.name)
+                            }
+                            .onDelete(perform: viewModel.handleOnDelete)
+                        } else {
+                            ForEach(viewModel.filteredOrderedRecipes, id: \.self) { recipe in
+                                Text(recipe.name)
+                            }
+                        }
+                        
+                            
                     }
                     .listStyle(.insetGrouped)
                     .searchable(text: $viewModel.searchText)
                     .navigationTitle(selectedCategory.title)
+                    .toolbar {
+                        if selectedCategory.title != CategoryNames.All.rawValue {
+                            EditButton()
+                        }
+                    }
                 }
             } else {
                 Text("Select a category")

@@ -56,5 +56,10 @@ class RecipeCategoriesManager {
         dataHandler.handleEraseAllData()
     }
     
+    func handleOnDelete(at offsets: IndexSet) {
+        let itemToRemove = filteredOrderedRecipes[offsets.first ?? 0]
+        dataHandler.removeRecipeFromCategory(itemToRemove, from: selectedCategory!)
+    }
+    
 
 }
