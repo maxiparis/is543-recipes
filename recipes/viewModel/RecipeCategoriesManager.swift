@@ -60,5 +60,10 @@ class RecipeCategoriesManager {
         dataHandler.removeRecipeFromCategory(itemToRemove, from: selectedCategory!)
     }
     
+    func removeCategory(at offsets: IndexSet) {
+        let itemToRemove = otherCategories[offsets.first ?? 0]
+        dataHandler.removeCategory(itemToRemove)
+    }
+    
 
 }

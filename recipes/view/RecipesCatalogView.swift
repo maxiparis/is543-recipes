@@ -13,34 +13,33 @@ struct RecipesCatalogView: View {
     
     var body: some View {
         NavigationSplitView {
-            ZStack(alignment: .bottom) {
-                List(selection: $viewModel.selectedCategory) {
-                    Section {
-                        ForEach(viewModel.allAndFavoritesCategories.sorted(by: { $0.title < $1.title })) { category in
-                            Text("\(category.emoji)  \(category.title)")
-                                .tag(category)
-                        }
-                    }
-                    
-                    Section {
-                        ForEach(viewModel.otherCategories) { category in
-                            Text("\(category.emoji)  \(category.title)")
-                                .tag(category)
-                        }
+            List(selection: $viewModel.selectedCategory) {
+                Section {
+                    ForEach(viewModel.allAndFavoritesCategories.sorted(by: { $0.title < $1.title })) { category in
+                        Text("\(category.emoji)  \(category.title)")
+                            .tag(category)
                     }
                 }
                 
-                VStack {
-                    Button("Reset Data") {
-                        viewModel.resetData()
+                Section {
+                    ForEach(viewModel.otherCategories) { category in
+                        Text("\(category.emoji)  \(category.title)")
+                            .tag(category)
                     }
-                    
-                    Button("Erase all data") {
-                        viewModel.handleEraseAllData()
-                    }
+                    .onDelete(perform: viewModel.removeCategory)
                 }
             }
             .navigationTitle("Categories")
+            .toolbar {
+                ToolbarItemGroup {
+                    Button {
+                        print("tapping the plus")
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    EditButton()
+                }
+            }
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
                 if selectedCategory.recipes.isEmpty {
