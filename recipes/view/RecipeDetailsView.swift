@@ -58,7 +58,12 @@ struct RecipeDetailsView: View {
                 }
                 
                 Section(header: Text("Instructions").font(.title3)) {
-                    Text(recipeManager.recipe.instructions)
+                    ForEach(recipeManager.instructions.sorted(by: { $0.order < $1.order }), id: \.self) { instruction in
+                        VStack(alignment: .leading, spacing: 15) {
+                            Label(instruction.title, systemImage: "list.clipboard")
+                            Text(instruction.descriptions)
+                        }
+                    }
                 }
                 
                 Section(header: Text("Categories").font(.title3)) {
@@ -74,7 +79,9 @@ struct RecipeDetailsView: View {
                         .contentTransition(.symbolEffect(.replace))
                         .foregroundStyle(.yellow)
                         .onTapGesture {
-                            recipeManager.toggleRecipeIsFavorite()
+                            withAnimation {
+                                recipeManager.toggleRecipeIsFavorite()
+                            }
                         }
                 }
             }

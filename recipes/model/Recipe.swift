@@ -16,15 +16,17 @@ class Recipe {
     var imageURL: String
     var cookTime: Int //in minutes
     var servings: Int //for people, eg: 2 servings are for 2 people
-    var instructions: String
-    var categories: [Category]
+    
+    //Relationships
+    @Relationship(deleteRule: .cascade, inverse: \Instruction.recipe) var instructions: [Instruction] = []
     @Relationship(deleteRule: .cascade, inverse: \Ingredient.recipe) var ingredients: [Ingredient] = []
+    var categories: [Category]
     
     var isFavorite: Bool {
         return categories.contains(where: { $0.title == "Favorites" })
     }
             
-    init(name: String, imageURL: String, recipeDescription: String, cookTime: Int, servings: Int, instructions: String, categories: [Category], ingredients: [Ingredient]) {
+    init(name: String, imageURL: String, recipeDescription: String, cookTime: Int, servings: Int, instructions: [Instruction], categories: [Category], ingredients: [Ingredient]) {
         self.name = name
         self.imageURL = imageURL
         self.recipeDescription = recipeDescription

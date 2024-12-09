@@ -26,13 +26,7 @@ class RecipeCategoriesManager {
     }
     
     var selectedCategory: Category?
-    var selectedRecipe: Recipe? {
-        didSet {
-            if let selectedRecipe {
-                print("selectedRecipe: \(selectedRecipe), ingredients: \(selectedRecipe.ingredients)")
-            }
-        }
-    }
+    var selectedRecipe: Recipe?
     
     
     //MARK: - Init

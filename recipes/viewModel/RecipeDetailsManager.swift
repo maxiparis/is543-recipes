@@ -22,6 +22,9 @@ class RecipeDetailsManager {
     var imageURL: String {
         recipe.imageURL
     }
+    var instructions: [Instruction] {
+        recipe.instructions
+    }
 
     
     //MARK: - Init
