@@ -98,6 +98,7 @@ struct RecipeDetailsView: View {
         }
         .sheet(isPresented: $recipeManager.presentAddCategory) {
             AddCategoryToRecipeView(recipeManager: recipeManager)
+                .presentationDetents([.medium])
         }
     }
 }
