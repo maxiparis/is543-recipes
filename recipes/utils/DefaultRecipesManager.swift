@@ -163,7 +163,7 @@ struct DefaultRecipesManager {
         
         try? modelContext.save()
     }
-    
+     
     mutating func generateInitialCategories() {
         self.categories = [
             Category(title: CategoryNames.All.rawValue, emoji: "🍽️"),

@@ -44,6 +44,22 @@ class DataHandler {
             
             let categoriesDescriptor = FetchDescriptor<Category>()
             categories = try modelContext.fetch(categoriesDescriptor)
+            
+//            //Sort "All" category recipes
+//            let allCategory = categories.first(where: { $0.title == CategoryNames.All.rawValue })
+//            
+//            if let allCategory {
+//                print("Sorting 'All' category's recipes by name")
+//                allCategory.recipes.sort(by: { $0.name < $1.name })
+//                
+//                print("Recipes in 'All' category in order:")
+//                categories.first(where: { $0.title == CategoryNames.All.rawValue })?.recipes.forEach { recipe in
+//                    print("\(recipe.name)")
+//                }
+//                
+//                try? modelContext.save()
+//            }
+            
         } catch {
             print("Failed to fetch data.")
         }
