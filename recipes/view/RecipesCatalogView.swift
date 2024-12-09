@@ -48,10 +48,11 @@ struct RecipesCatalogView: View {
                         .listStyle(.insetGrouped)
                         .navigationTitle(selectedCategory.title)
                 } else {
-                    List(selectedCategory.recipes.sorted(by: {$0.name < $1.name}), id: \.self, selection: $viewModel.selectedRecipe) { recipe in
+                    List(viewModel.filteredOrderedRecipes, id: \.self, selection: $viewModel.selectedRecipe) { recipe in
                         Text(recipe.name)
                     }
                     .listStyle(.insetGrouped)
+                    .searchable(text: $viewModel.searchText)
                     .navigationTitle(selectedCategory.title)
                 }
             } else {

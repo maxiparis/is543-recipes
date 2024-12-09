@@ -28,6 +28,17 @@ class RecipeCategoriesManager {
     var selectedCategory: Category?
     var selectedRecipe: Recipe?
     
+    var searchText: String = ""
+    var filteredOrderedRecipes: [Recipe] {
+        guard let selectedCategory else { return [] }
+        
+        if searchText.isEmpty {
+            return selectedCategory.recipes.sorted(by: {$0.name < $1.name})
+        } else {
+            return selectedCategory.recipes.filter({ $0.name.contains(searchText)}).sorted(by: {$0.name < $1.name})
+        }
+    }
+    
     
     //MARK: - Init
 
