@@ -33,12 +33,15 @@ struct RecipesCatalogView: View {
             .toolbar {
                 ToolbarItemGroup {
                     Button {
-                        print("tapping the plus")
+                        viewModel.presentAddNewCategory = true
                     } label: {
                         Image(systemName: "plus")
                     }
                     EditButton()
                 }
+            }
+            .sheet(isPresented: $viewModel.presentAddNewCategory) {
+                AddNewCategoryView()
             }
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
@@ -92,4 +95,36 @@ struct RecipesCatalogView: View {
 }
 
 
-
+struct AddNewCategoryView: View {
+    
+    @State var titleText: String = ""
+    @State var emojiText: String = ""
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Add New Category").font(.title3)) {
+                HStack {
+                    Text("Category Title:")
+                    Spacer()
+                    TextField("Tap to enter", text: $titleText)
+                        .frame(width: 150)
+                        .multilineTextAlignment(.trailing)
+                }
+                
+                HStack {
+                    Text("Category Emoji:")
+                    Spacer()
+                    TextField("Tap to enter", text: $emojiText)
+                        .frame(width: 150)
+                        .multilineTextAlignment(.trailing)
+                }
+                
+                Button {
+                    //TODO:
+                } label: {
+                    Label("Create new category", systemImage: "checkmark")
+                }
+            }
+        }
+    }
+}

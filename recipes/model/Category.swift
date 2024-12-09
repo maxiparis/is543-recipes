@@ -16,7 +16,7 @@ class Category: Identifiable, Hashable {
     var emoji: String
     @Relationship(deleteRule: .nullify, inverse: \Recipe.categories) var recipes: [Recipe] = []
     
-    init(title: String, emoji: String ,recipes: [Recipe] = []) {
+    init(title: String, emoji: String, recipes: [Recipe] = []) {
         self.title = title
         self.emoji = emoji
         self.recipes = recipes
