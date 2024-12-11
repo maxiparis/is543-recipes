@@ -42,6 +42,7 @@ struct RecipesCatalogView: View {
             }
             .sheet(isPresented: $viewModel.presentAddNewCategory) {
                 AddNewCategoryView(viewModel: viewModel)
+                    .presentationDetents([.medium])
             }
         } content: {
             if let selectedCategory = viewModel.selectedCategory {

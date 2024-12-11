@@ -52,7 +52,7 @@ struct RecipeDetailsView: View {
                 if (recipeManager.recipe.ingredients.isEmpty) {
                     Text("No Ingredients")
                 } else {
-                    ForEach(recipeManager.recipe.ingredients) { ing in
+                    ForEach(recipeManager.recipe.ingredients.sorted(by: { $0.name < $1.name }), id: \.self) { ing in
                         Text("\(ing.name) - \(ing.amount) \(ing.scale)")
                     }
                 }
@@ -68,7 +68,7 @@ struct RecipeDetailsView: View {
             }
             
             Section(header: Text("Categories").font(.title3)) {
-                ForEach(recipeManager.recipe.categories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue }), id: \.self) { category in
+                ForEach(recipeManager.recipe.categories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue }).sorted(by: { $0.title < $1.title }), id: \.self) { category in
                     Text("\(category.emoji) \(category.title)")
                 }
                 
@@ -122,10 +122,10 @@ struct AddCategoryToRecipeView: View {
                         }
                     } label: {
                         if recipeManager.isRecipeInCategory(category) {
-                            Label(category.title, systemImage: "minus")
+                            Label("\(category.emoji) \(category.title)", systemImage: "minus")
                                 .foregroundStyle(.red)
                         } else {
-                            Label(category.title, systemImage: "plus")
+                            Label("\(category.emoji) \(category.title)", systemImage: "plus")
                         }
                     }
                 }
