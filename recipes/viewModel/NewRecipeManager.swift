@@ -12,6 +12,9 @@ let NEW_INSTRUCTION_DESCRIPTION_PLACEHOLDER = "Tap here to enter your instructio
 
 @Observable
 class NewRecipeManager {
+    
+    //MARK: - Class properties
+
     var dataHandler: DataHandler
     var isPresented: Binding<Bool>
     
@@ -20,6 +23,10 @@ class NewRecipeManager {
     var recipeDescription: String = ""
     var servings: String = ""
     var cookTime: String = ""
+    
+    var allOtherCategories: [Category] {
+        dataHandler.otherCategories
+    }
     
     var ingredients: [Ingredient] = []
     var newIngredientName = ""
@@ -34,11 +41,22 @@ class NewRecipeManager {
     var newInstructionOrder = ""
     var newInstructionDescription = NEW_INSTRUCTION_DESCRIPTION_PLACEHOLDER
     
+    var recipeCategories: [Category] = []
+    var categoriesThisRecipeIsNotIn: [Category] {
+        allOtherCategories.filter { category in
+            !recipeCategories.contains(category)
+        }
+    }
+    
+    //MARK: - Initializer
+
     init(dataHandler: DataHandler, isPresented: Binding<Bool>) {
         self.dataHandler = dataHandler
         self._isPresented = isPresented
     }
     
+    //MARK: - Computed Properties
+
     var isValid: Bool {
         name.count > 0 &&
         imageURL.count > 0 &&
@@ -62,6 +80,7 @@ class NewRecipeManager {
     }
     
     //MARK: - User Intents
+    
     func handleCreateNewRecipe() {
         guard let servings = Int(servings), let cookTime = Int(cookTime) else { print("Creating new recipe FAILED"); return }
         
@@ -71,7 +90,7 @@ class NewRecipeManager {
                cookTime: cookTime,
                servings: servings,
                instructions: instructions,
-               categories: [],
+               categories: recipeCategories,
                ingredients: ingredients
         )
         
@@ -110,4 +129,13 @@ class NewRecipeManager {
         }
     }
 
+    func handleAddCategory(_ category: Category) {
+        recipeCategories.append(category)
+    }
+    
+    func deleteCategoryFromRecipe(at offset: IndexSet) {
+        if let offset = offset.first {
+            recipeCategories.remove(at: offset)
+        }
+    }
 }

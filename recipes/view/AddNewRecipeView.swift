@@ -74,8 +74,21 @@ struct AddNewRecipeView: View {
             }
         }
         
-        Section(header: Text("Categories")) {
-            
+        Section(header: Text("Categories"), footer: Text("Swipe left to delete an added category")) {
+            ForEach(newRecipeManager.recipeCategories) { category in
+                Text("\(category.emoji) \(category.title)")
+            }
+            .onDelete(perform: withAnimation { newRecipeManager.deleteCategoryFromRecipe })
+                        
+            ForEach(newRecipeManager.categoriesThisRecipeIsNotIn) { category in
+                Button {
+                    withAnimation {
+                        newRecipeManager.handleAddCategory(category)
+                    }
+                } label: {
+                    Label("\(category.emoji) \(category.title)", systemImage: "plus")
+                }
+            }
         }
         
         
