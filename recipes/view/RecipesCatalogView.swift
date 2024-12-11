@@ -41,8 +41,7 @@ struct RecipesCatalogView: View {
                 }
             }
             .sheet(isPresented: $viewModel.presentAddNewCategory) {
-                AddNewCategoryView(viewModel: viewModel)
-                    .presentationDetents([.medium])
+                AddNewPickerView(categoriesManager: viewModel)
             }
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
@@ -90,43 +89,6 @@ struct RecipesCatalogView: View {
                 }
             } else {
                 Text("Select a recipe.")
-            }
-        }
-    }
-}
-
-
-struct AddNewCategoryView: View {
-    var viewModel: RecipeCategoriesManager
-    
-    @State var titleText: String = ""
-    @State var emojiText: String = ""
-    
-    var body: some View {
-        Form {
-            Section(header: Text("Add New Category").font(.title3)) {
-                HStack {
-                    Text("Category Title:")
-                    Spacer()
-                    TextField("Tap to enter", text: $titleText)
-                        .frame(width: 150)
-                        .multilineTextAlignment(.trailing)
-                }
-                
-                HStack {
-                    Text("Category Emoji:")
-                    Spacer()
-                    TextField("Tap to enter", text: $emojiText)
-                        .frame(width: 150)
-                        .multilineTextAlignment(.trailing)
-                }
-                
-                Button {
-                    viewModel.handleCreateNewCategory(title: titleText, emoji: emojiText)
-                    viewModel.presentAddNewCategory = false
-                } label: {
-                    Label("Create new category", systemImage: "tray.and.arrow.down")
-                }
             }
         }
     }
