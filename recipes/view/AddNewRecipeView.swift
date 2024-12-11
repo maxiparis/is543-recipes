@@ -31,10 +31,11 @@ struct AddNewRecipeView: View {
         Section(header: Text("Ingredients")) {
             ForEach(newRecipeManager.ingredients) { ingredient in
                 Text("\(ingredient.name) - \(ingredient.amount) \(ingredient.scale)")
-            }.onDelete(perform: newRecipeManager.deleteIngredient)
+            }
+            .onDelete(perform: newRecipeManager.deleteIngredient)
             
             HStack {
-                TextField("New Ingredient", text: $newRecipeManager.newIngredientName)
+                TextField("Name", text: $newRecipeManager.newIngredientName)
                 TextField("Amount", text: $newRecipeManager.newIngredientAmount)
                 TextField("Scale", text: $newRecipeManager.newIngredientScale)
                 Button(action: {
@@ -47,6 +48,35 @@ struct AddNewRecipeView: View {
             }
         }
         
+        Section(header: Text("Instructions")) {
+            ForEach(newRecipeManager.sortedInstructions) { instruction in
+                VStack(alignment: .leading, spacing: 15) {
+                    Text("\(instruction.order) - \(instruction.title)")
+                    Text(instruction.descriptions)
+                }
+            }
+            .onDelete(perform: newRecipeManager.deleteInstruction)
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    TextField("Order", text: $newRecipeManager.newInstructionOrder)
+                    TextField("Title", text: $newRecipeManager.newInstructionTitle)
+                    Button(action: {
+                        newRecipeManager.handleNewInstruction()
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .tint(.green)
+                    }
+                    .disabled(!newRecipeManager.isValidInstruction)
+                }
+                 
+                TextEditor(text: $newRecipeManager.newInstructionDescription)
+            }
+        }
+        
+        Section(header: Text("Categories")) {
+            
+        }
         
         
         Button {

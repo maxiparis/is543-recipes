@@ -9,7 +9,9 @@ import Foundation
 import SwiftData
 
 @Model
-class Instruction {
+class Instruction: Identifiable {
+    
+    @Attribute(.unique) var id = UUID()
     var order: Int
     var title: String
     var descriptions: String
