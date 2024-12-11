@@ -143,4 +143,10 @@ class DataHandler {
         modelContext.delete(category)
         try? modelContext.save()
     }
+    
+    func createCategory(_ category: Category) {
+        categories.append(category)
+        modelContext.insert(category)
+        try? modelContext.save()
+    }
 }

@@ -41,7 +41,7 @@ struct RecipesCatalogView: View {
                 }
             }
             .sheet(isPresented: $viewModel.presentAddNewCategory) {
-                AddNewCategoryView()
+                AddNewCategoryView(viewModel: viewModel)
             }
         } content: {
             if let selectedCategory = viewModel.selectedCategory {
@@ -96,6 +96,7 @@ struct RecipesCatalogView: View {
 
 
 struct AddNewCategoryView: View {
+    var viewModel: RecipeCategoriesManager
     
     @State var titleText: String = ""
     @State var emojiText: String = ""
@@ -120,9 +121,10 @@ struct AddNewCategoryView: View {
                 }
                 
                 Button {
-                    //TODO:
+                    viewModel.handleCreateNewCategory(title: titleText, emoji: emojiText)
+                    viewModel.presentAddNewCategory = false
                 } label: {
-                    Label("Create new category", systemImage: "checkmark")
+                    Label("Create new category", systemImage: "tray.and.arrow.down")
                 }
             }
         }

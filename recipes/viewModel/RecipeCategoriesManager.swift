@@ -66,5 +66,10 @@ class RecipeCategoriesManager {
         dataHandler.removeCategory(itemToRemove)
     }
     
+    func handleCreateNewCategory(title: String, emoji: String) {
+        let newCategory = Category(title: title, emoji: emoji)
+        dataHandler.createCategory(newCategory)
+    }
+    
 
 }
