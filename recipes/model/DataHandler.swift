@@ -149,4 +149,15 @@ class DataHandler {
         modelContext.insert(category)
         try? modelContext.save()
     }
+    
+    func deleteRecipe(_ recipe: Recipe) {
+        recipes.removeAll(where: { $0 == recipe })
+        
+        for category in recipe.categories {
+            category.recipes.removeAll(where: { $0 == recipe })
+        }
+        
+        modelContext.delete(recipe)
+        try? modelContext.save()
+    }
 }

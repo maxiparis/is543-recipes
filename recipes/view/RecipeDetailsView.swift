@@ -73,11 +73,24 @@ struct RecipeDetailsView: View {
                 }
                 
                 Button {
-                    //show sheet
                     recipeManager.presentAddCategory = true
                 } label: {
                     Label("Edit categories", systemImage: "pencil")
                 }
+            }
+            
+            Button("Delete recipe", systemImage: "trash", role: .destructive) {
+                recipeManager.presentRemoveRecipeConfirmation = true
+            }
+            .foregroundStyle(.red)
+            .alert(Text("Delete \(recipeManager.recipe.name)?"), isPresented: $recipeManager.presentRemoveRecipeConfirmation) {
+                Button("Delete", role: .destructive) {
+                    recipeManager.handleDeleteRecipe()
+                }
+                
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Do you want to delete this recipe? This action cannot be undone.")
             }
         }
         .navigationTitle(recipeManager.recipe.name)

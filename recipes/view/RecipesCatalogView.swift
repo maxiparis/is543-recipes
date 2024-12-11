@@ -86,7 +86,7 @@ struct RecipesCatalogView: View {
         } detail: {
             if let selectedRecipe = viewModel.selectedRecipe {
                 withAnimation {
-                    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: selectedRecipe, dataHandler: viewModel.dataHandler))
+                    RecipeDetailsView(recipeManager: RecipeDetailsManager(recipe: selectedRecipe, dataHandler: viewModel.dataHandler, selectedRecipe: $viewModel.selectedRecipe))
                 }
             } else {
                 Text("Select a recipe.")

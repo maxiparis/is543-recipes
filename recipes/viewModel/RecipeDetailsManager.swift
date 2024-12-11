@@ -15,6 +15,7 @@ class RecipeDetailsManager {
     //MARK: - Properties
     private var dataHandler: DataHandler
     var recipe: Recipe
+    var selectedRecipe: Binding<Recipe?>
     
     var allCategories: [Category] {
         dataHandler.categories
@@ -45,13 +46,15 @@ class RecipeDetailsManager {
     }
     
     var presentAddCategory: Bool = false
+    var presentRemoveRecipeConfirmation = false
 
     
     //MARK: - Init
     
-    init(recipe: Recipe, dataHandler: DataHandler) {
+    init(recipe: Recipe, dataHandler: DataHandler, selectedRecipe: Binding<Recipe?>) {
         self.recipe = recipe
         self.dataHandler = dataHandler
+        self._selectedRecipe = selectedRecipe
     }
     
     //MARK: - Logic
@@ -73,5 +76,10 @@ class RecipeDetailsManager {
     
     func handleRemoveRecipeFromCategory(_ category: Category) {
         dataHandler.removeRecipeFromCategory(self.recipe, from: category)
+    }
+    
+    func handleDeleteRecipe() {
+        selectedRecipe.wrappedValue = nil
+        dataHandler.deleteRecipe(self.recipe)
     }
 }
