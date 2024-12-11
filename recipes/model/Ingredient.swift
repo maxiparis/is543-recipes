@@ -9,7 +9,7 @@ import SwiftData
 import Foundation
 
 @Model
-class Ingredient {
+class Ingredient: Identifiable {
     @Attribute(.unique) var id = UUID()
     var name: String
     var amount: String

@@ -19,10 +19,17 @@ class NewRecipeManager {
     var servings: String = ""
     var cookTime: String = ""
     
+    var ingredients: [Ingredient] = []
+    var newIngredientName = ""
+    var newIngredientAmount = ""
+    var newIngredientScale = ""
+    
     init(dataHandler: DataHandler, isPresented: Binding<Bool>) {
         self.dataHandler = dataHandler
         self._isPresented = isPresented
     }
+    
+    
     
     var isValid: Bool {
         name.count > 0 &&
@@ -30,6 +37,12 @@ class NewRecipeManager {
         recipeDescription.count > 0 &&
         servings.count > 0 &&
         cookTime.count > 0
+    }
+    
+    var isValidIngredient: Bool {
+        newIngredientName.count > 0 &&
+        newIngredientScale.count > 0 &&
+        newIngredientAmount.count > 0
     }
     
     //MARK: - User Intents
@@ -43,11 +56,25 @@ class NewRecipeManager {
                servings: servings,
                instructions: [],
                categories: [],
-               ingredients: []
+               ingredients: ingredients
         )
         
         isPresented.wrappedValue = false
         dataHandler.createNewRecipe(newRecipe)
+    }
+    
+    func handleNewIngredient() {
+        ingredients.append(Ingredient(name: newIngredientName, amount: newIngredientAmount, scale: newIngredientScale))
+        
+        newIngredientName = ""
+        newIngredientAmount = ""
+        newIngredientScale = ""
+    }
+    
+    func deleteIngredient(at offset: IndexSet) {
+        if let offset = offset.first {
+            ingredients.remove(at: offset)
+        }
     }
 
 }
