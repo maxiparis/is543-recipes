@@ -7,11 +7,9 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
-    //TODO: this should have a ViewModel
     @Bindable var recipeManager: RecipeDetailsManager
     
     var body: some View {
-//        var _ = print("RE-RENDERED")
         List {
             AsyncImage(url: URL(string: recipeManager.imageURL)) { image in
                 image
@@ -95,7 +93,13 @@ struct RecipeDetailsView: View {
         }
         .navigationTitle(recipeManager.recipe.name)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup {
+                Button("Edit") {
+                    withAnimation {
+                        recipeManager.presentEditRecipe = true
+                    }
+                }
+                
                 Image(systemName: recipeManager.isRecipeFavorite ? "star.fill" : "star")
                     .contentTransition(.symbolEffect(.replace))
                     .foregroundStyle(.yellow)
@@ -112,6 +116,11 @@ struct RecipeDetailsView: View {
         .sheet(isPresented: $recipeManager.presentAddCategory) {
             AddCategoryToRecipeView(recipeManager: recipeManager)
                 .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $recipeManager.presentEditRecipe) {
+            Form {
+                EditRecipeView(editRecipeManager: EditRecipeManager(dataHandler: recipeManager.dataHandler, isPresented: $recipeManager.presentEditRecipe, recipe: recipeManager.recipe))
+            }
         }
     }
 }

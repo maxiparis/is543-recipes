@@ -11,13 +11,12 @@ import SwiftUI
 let NEW_INSTRUCTION_DESCRIPTION_PLACEHOLDER = "Tap here to enter your instruction description..."
 
 @Observable
-class NewRecipeManager {
+class AddRecipeManager {
     
     //MARK: - Class properties
 
     var dataHandler: DataHandler
     var isPresented: Binding<Bool>
-    
     var name: String = ""
     var imageURL: String = ""
     var recipeDescription: String = ""
@@ -48,12 +47,14 @@ class NewRecipeManager {
         }
     }
     
-    //MARK: - Initializer
+    
+    //MARK: - Initializers
 
     init(dataHandler: DataHandler, isPresented: Binding<Bool>) {
         self.dataHandler = dataHandler
         self._isPresented = isPresented
     }
+
     
     //MARK: - Computed Properties
 

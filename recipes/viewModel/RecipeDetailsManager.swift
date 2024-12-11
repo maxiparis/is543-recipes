@@ -13,7 +13,7 @@ import SwiftUI
 class RecipeDetailsManager {
     
     //MARK: - Properties
-    private var dataHandler: DataHandler
+    var dataHandler: DataHandler
     var recipe: Recipe
     var selectedRecipe: Binding<Recipe?>
     
@@ -45,8 +45,9 @@ class RecipeDetailsManager {
         recipe.instructions
     }
     
-    var presentAddCategory: Bool = false
+    var presentAddCategory = false
     var presentRemoveRecipeConfirmation = false
+    var presentEditRecipe = false
 
     
     //MARK: - Init

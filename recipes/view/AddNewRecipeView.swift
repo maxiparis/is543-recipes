@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddNewRecipeView: View {
-    @Bindable var newRecipeManager: NewRecipeManager
+    @Bindable var newRecipeManager: AddRecipeManager
     
     var body: some View {
         Section(header: Text("Recipe details")) {
@@ -19,6 +19,7 @@ struct AddNewRecipeView: View {
         
         Section(header: Text("Description")) {
             TextEditor(text: $newRecipeManager.recipeDescription)
+                .frame(minHeight: 80)
         }
         
         Section(header: Text("Additional information")) {
@@ -71,6 +72,7 @@ struct AddNewRecipeView: View {
                 }
                  
                 TextEditor(text: $newRecipeManager.newInstructionDescription)
+                    .frame(minHeight: 80)
             }
         }
         

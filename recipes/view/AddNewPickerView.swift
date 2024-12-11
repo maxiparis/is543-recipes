@@ -27,7 +27,7 @@ struct AddNewPickerView: View {
             if selectedTab == 0 {
                 AddNewCategoryView(viewModel: categoriesManager)
             } else {
-                AddNewRecipeView(newRecipeManager: NewRecipeManager(dataHandler: categoriesManager.dataHandler, isPresented: $categoriesManager.presentAddNewCategory))
+                AddNewRecipeView(newRecipeManager: AddRecipeManager(dataHandler: categoriesManager.dataHandler, isPresented: $categoriesManager.presentAddNewCategory))
             }
         }
     }
