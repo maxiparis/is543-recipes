@@ -76,7 +76,7 @@ struct RecipeDetailsView: View {
                     //show sheet
                     recipeManager.presentAddCategory = true
                 } label: {
-                    Label("Add recipe to a category", systemImage: "plus")
+                    Label("Edit categories", systemImage: "pencil")
                 }
             }
         }
@@ -107,27 +107,30 @@ struct AddCategoryToRecipeView: View {
     @Bindable var recipeManager: RecipeDetailsManager
     
     var body: some View {
-        List(recipeManager.allOtherCategories) { category in
-            Button {
-                //TODO:
-                if recipeManager.isRecipeInCategory(category) {
-                    withAnimation {
-                        recipeManager.handleRemoveRecipeFromCategory(category)
+        List {
+            Section(header: Text("Edit categories").font(.title3)) {
+                ForEach(recipeManager.allOtherCategories) { category in
+                    Button {
+                        if recipeManager.isRecipeInCategory(category) {
+                            withAnimation {
+                                recipeManager.handleRemoveRecipeFromCategory(category)
+                            }
+                        } else {
+                            withAnimation {
+                                recipeManager.handleAddRecipeToCategory(category)
+                            }
+                        }
+                    } label: {
+                        if recipeManager.isRecipeInCategory(category) {
+                            Label(category.title, systemImage: "minus")
+                                .foregroundStyle(.red)
+                        } else {
+                            Label(category.title, systemImage: "plus")
+                        }
                     }
-                } else {
-                    withAnimation {
-                        recipeManager.handleAddRecipeToCategory(category)
-                    }
-                }
-            } label: {
-                if recipeManager.isRecipeInCategory(category) {
-                    Label("Remove from \(category.title)", systemImage: "minus")
-                } else {
-                    Label("Add to \(category.title)", systemImage: "plus")
                 }
             }
         }
-        .navigationTitle("Add this recipe to:")
     }
 }
 
