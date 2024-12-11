@@ -160,4 +160,19 @@ class DataHandler {
         modelContext.delete(recipe)
         try? modelContext.save()
     }
+    
+    func createNewRecipe(_ recipe: Recipe) {
+        recipes.append(recipe)
+        
+        let allCategory = categories.first(where: { $0.title == CategoryNames.All.rawValue })
+        guard let allCategory else {
+            return
+        }
+        
+        allCategory.recipes.append(recipe)
+        recipe.categories.append(allCategory)
+        
+        modelContext.insert(recipe)
+        try? modelContext.save()
+    }
 }

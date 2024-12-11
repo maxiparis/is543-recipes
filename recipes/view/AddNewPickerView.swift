@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddNewPickerView: View {
-    var categoriesManager: RecipeCategoriesManager
+    @Bindable var categoriesManager: RecipeCategoriesManager
 
     @State var selectedTab: Int = 0
     
@@ -27,7 +27,7 @@ struct AddNewPickerView: View {
             if selectedTab == 0 {
                 AddNewCategoryView(viewModel: categoriesManager)
             } else {
-                AddNewRecipeView(newRecipeManager: NewRecipeManager())
+                AddNewRecipeView(newRecipeManager: NewRecipeManager(dataHandler: categoriesManager.dataHandler, isPresented: $categoriesManager.presentAddNewCategory))
             }
         }
     }

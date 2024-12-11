@@ -29,10 +29,10 @@ struct AddNewRecipeView: View {
         }
         
         Button {
-            //TODO:
+            newRecipeManager.handleCreateNewRecipe()
         } label: {
             Text("Create new recipe")
         }
-        //TODO: disable only when all attributes are ready
+        .disabled(!newRecipeManager.isValid)
     }
 }

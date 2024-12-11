@@ -21,5 +21,4 @@ class Category: Identifiable, Hashable {
         self.emoji = emoji
         self.recipes = recipes
     }
-    
 }
