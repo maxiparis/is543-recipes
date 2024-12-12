@@ -10,11 +10,28 @@ import SwiftData
 
 @main
 struct recipesApp: App {
+    
+    let container: ModelContainer
+    var viewModel: RecipeCategoriesManager
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RecipesCatalogView(viewModel: viewModel)
         }
-        .modelContainer(for: [Item.self])
+        .modelContainer(container)
+//        .environment(viewModel)
     }
+    
+    init() {
+        do {
+            container = try ModelContainer(for: Recipe.self, Category.self, Ingredient.self)
+        } catch {
+            fatalError("""
+                Failed to create ModelContainer.
+                """)
+        }
+        
+        viewModel = RecipeCategoriesManager(modelContext: container.mainContext)
+    }
+    
 }
