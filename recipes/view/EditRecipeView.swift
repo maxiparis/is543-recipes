@@ -43,10 +43,21 @@ struct EditRecipeView: View {
         }
         
         Section(header: Text("Additional information")) {
-            TextField("Servings", text: $editRecipeManager.servings)
-                .keyboardType(.numberPad)
-            TextField("Cook time (in minutes)", text: $editRecipeManager.cookTime)
-                .keyboardType(.numberPad)
+            HStack {
+                Text("Servings")
+                TextField("Servings", text: $editRecipeManager.servings)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.trailing)
+                    .keyboardType(.numberPad)
+            }
+            
+            HStack {
+                Text("Cook time (in minutes)")
+                TextField("Cook time (in minutes)", text: $editRecipeManager.cookTime)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.trailing)
+                    .keyboardType(.numberPad)
+            }
         }
         
         Section(header: Text("Ingredients")) {
@@ -97,7 +108,7 @@ struct EditRecipeView: View {
         }
         
         Section(header: Text("Categories"), footer: Text("Swipe left to delete an added category")) {
-            ForEach(editRecipeManager.recipeCategories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue })) { category in
+            ForEach(editRecipeManager.recipeCategoriesExcepAllAndFavs) { category in
                 Text("\(category.emoji) \(category.title)")
             }
             .onDelete(perform: withAnimation { editRecipeManager.deleteCategoryFromRecipe })

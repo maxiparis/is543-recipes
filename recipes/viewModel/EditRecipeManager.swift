@@ -53,6 +53,9 @@ class EditRecipeManager {
             !recipeCategories.contains(category)
         }
     }
+    var recipeCategoriesExcepAllAndFavs : [Category] {
+        recipeCategories.filter({ $0.title != CategoryNames.All.rawValue && $0.title != CategoryNames.Favorites.rawValue })
+    }
     
     
     //MARK: - Initializers
@@ -151,7 +154,8 @@ class EditRecipeManager {
     
     func deleteCategoryFromRecipe(at offset: IndexSet) {
         if let offset = offset.first {
-            recipeCategories.remove(at: offset)
+            let categorieToRemove = recipeCategoriesExcepAllAndFavs[offset]
+            recipeCategories.removeAll(where: { $0.id == categorieToRemove.id })
         }
     }
     
