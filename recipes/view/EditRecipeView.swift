@@ -126,7 +126,7 @@ struct EditRecipeView: View {
         
         
         Button {
-//            editRecipeManager.updateExistingRecipe()
+            editRecipeManager.updateExistingRecipe()
         } label: {
             Text("Update recipe")
         }

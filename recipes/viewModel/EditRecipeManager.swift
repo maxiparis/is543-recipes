@@ -22,7 +22,9 @@ class EditRecipeManager {
     //MARK: - Class properties
 
     var dataHandler: DataHandler
+    var recipeBeingEdited: Recipe
     var isPresented: Binding<Bool>
+    
     
     var name: String = ""
     var imageURL: String = ""
@@ -64,6 +66,7 @@ class EditRecipeManager {
         self.dataHandler = dataHandler
         self._isPresented = isPresented
         
+        self.recipeBeingEdited = recipe
         self.name = recipe.name
         self.imageURL = recipe.imageURL
         self.recipeDescription = recipe.recipeDescription
@@ -160,6 +163,17 @@ class EditRecipeManager {
     }
     
     func updateExistingRecipe() {
+        guard let servings = Int(servings), let cookTime = Int(cookTime) else { print("error updating existing recipe"); return }
         
+        recipeBeingEdited.name = name
+        recipeBeingEdited.imageURL = imageURL
+        recipeBeingEdited.recipeDescription = recipeDescription
+        recipeBeingEdited.servings = servings
+        recipeBeingEdited.cookTime = cookTime
+        recipeBeingEdited.ingredients = ingredients
+        recipeBeingEdited.instructions = instructions
+        recipeBeingEdited.categories = recipeCategories
+        
+        dataHandler.updateRecipe(recipeBeingEdited)
     }
 }

@@ -70,11 +70,11 @@ struct RecipeDetailsView: View {
                     Text("\(category.emoji) \(category.title)")
                 }
                 
-                Button {
-                    recipeManager.presentAddCategory = true
-                } label: {
-                    Label("Edit categories", systemImage: "pencil")
-                }
+//                Button {
+//                    recipeManager.presentAddCategory = true
+//                } label: {
+//                    Label("Edit categories", systemImage: "pencil")
+//                }
             }
             
             Button("Delete recipe", systemImage: "trash", role: .destructive) {

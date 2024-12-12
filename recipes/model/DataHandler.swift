@@ -175,4 +175,9 @@ class DataHandler {
         modelContext.insert(recipe)
         try? modelContext.save()
     }
+    
+    func updateRecipe(_ recipe: Recipe) {
+        modelContext.insert(recipe)
+        try? modelContext.save()
+    }
 }
